@@ -1,0 +1,79 @@
+class Organization:
+    def __init__(self, name: str):
+        self.name = name
+
+    def getName(self) -> str:
+        return self.name
+
+
+class Trainer:
+    def __init__(self, name: str, organization: Organization):
+        self.name = name
+        self.organization = organization
+
+    def getOrganization(self) -> str:
+        return self.organization.getName()
+
+
+class Trainee:
+    def __init__(self, name: str):
+        self.name = name
+
+
+class Topic:
+    def __init__(self, name: str):
+        self.name = name
+
+
+class Unit:
+    def __init__(self, durationHrs: int):
+        self.durationHrs = durationHrs
+        self.topics = []
+
+    def addTopic(self, topic: Topic):
+        self.topics.append(topic)
+
+    def getDurationHrs(self) -> int:
+        return self.durationHrs
+
+
+class Module:
+    def __init__(self):
+        self.units = []
+
+    def addUnit(self, unit: Unit):
+        self.units.append(unit)
+
+    def getUnits(self):
+        return self.units
+
+
+class Course:
+    def __init__(self):
+        self.modules = []
+
+    def addModule(self, module: Module):
+        self.modules.append(module)
+
+    def getModules(self):
+        return self.modules
+
+
+class Training:
+    def __init__(self, trainer: Trainer, trainees: list, course: Course):
+        self.trainer = trainer
+        self.trainees = trainees
+        self.course = course
+
+    def getNumOfTrainees(self) -> int:
+        return len(self.trainees)
+
+    def getTrainingOrganizationName(self) -> str:
+        return self.trainer.getOrganization()
+
+    def getTrainingDurationInHrs(self) -> int:
+        total_duration = 0
+        for module in self.course.getModules():
+            for unit in module.getUnits():
+                total_duration += unit.getDurationHrs()
+        return total_duration
